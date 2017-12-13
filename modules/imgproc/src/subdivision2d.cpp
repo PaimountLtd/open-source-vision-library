@@ -777,6 +777,30 @@ void Subdiv2D::getTriangleList(std::vector<Vec6f>& triangleList) const
     }
 }
 
+void Subdiv2D::getTriangleIndexList(std::vector<Vec3i>& triangleIndexList) const
+{
+	triangleIndexList.clear();
+	int i, total = (int)(qedges.size() * 4);
+	std::vector<bool> edgemask(total, false);
+
+	for (i = 4; i < total; i += 2)
+	{
+		if (edgemask[i])
+			continue;
+		int a, b, c;
+		int edge = i;
+		a = edgeOrg(edge, nullptr);
+		edgemask[edge] = true;
+		edge = getEdge(edge, NEXT_AROUND_LEFT);
+		b = edgeOrg(edge, nullptr);
+		edgemask[edge] = true;
+		edge = getEdge(edge, NEXT_AROUND_LEFT);
+		c = edgeOrg(edge, nullptr);
+		edgemask[edge] = true;
+		triangleIndexList.push_back(Vec3i(a, b, c));
+	}
+}
+
 void Subdiv2D::getVoronoiFacetList(const std::vector<int>& idx,
                                    CV_OUT std::vector<std::vector<Point2f> >& facetList,
                                    CV_OUT std::vector<Point2f>& facetCenters)
