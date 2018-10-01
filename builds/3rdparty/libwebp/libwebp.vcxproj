@@ -1,0 +1,325 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{0DD57CF0-185E-3E38-9417-085A7669DF6E}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>x64</Platform>
+    <ProjectName>libwebp</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\glaba\Documents\dev\opencv\build9\3rdparty\lib\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">libwebp.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">libwebpd</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\glaba\Documents\dev\opencv\build9\3rdparty\lib\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">libwebp.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">libwebp</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp;C:\Users\glaba\Documents\dev\opencv\build9;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
+      <AssemblerListingLocation>Debug/</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <CompileAs>CompileAsC</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4244;4267</DisableSpecificWarnings>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <ProcessorNumber>8</ProcessorNumber>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS;_VARIADIC_MAX=10;WEBP_USE_THREAD;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>C:\Users\glaba\Documents\dev\opencv\build9\3rdparty\lib\Debug\libwebpd.pdb</ProgramDataBaseFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS;_VARIADIC_MAX=10;WEBP_USE_THREAD;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp;C:\Users\glaba\Documents\dev\opencv\build9;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp;C:\Users\glaba\Documents\dev\opencv\build9;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64 /IGNORE:4221</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp;C:\Users\glaba\Documents\dev\opencv\build9;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
+      <AssemblerListingLocation>Release/</AssemblerListingLocation>
+      <CompileAs>CompileAsC</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4244;4267</DisableSpecificWarnings>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <ProcessorNumber>8</ProcessorNumber>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS;NDEBUG;_VARIADIC_MAX=10;WEBP_USE_THREAD;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>C:\Users\glaba\Documents\dev\opencv\build9\3rdparty\lib\Release\libwebp.pdb</ProgramDataBaseFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS;NDEBUG;_VARIADIC_MAX=10;WEBP_USE_THREAD;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp;C:\Users\glaba\Documents\dev\opencv\build9;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp;C:\Users\glaba\Documents\dev\opencv\build9;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64 /IGNORE:4221</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/glaba/Documents/dev/opencv/3rdparty/libwebp/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -HC:/Users/glaba/Documents/dev/opencv -BC:/Users/glaba/Documents/dev/opencv/build9 --check-stamp-file C:/Users/glaba/Documents/dev/opencv/build9/3rdparty/libwebp/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Users/glaba/Documents/dev/opencv/3rdparty/libwebp/CMakeLists.txt;C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\CMakeLists.txt;C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\glaba\Documents\dev\opencv\build9\3rdparty\libwebp\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/glaba/Documents/dev/opencv/3rdparty/libwebp/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -HC:/Users/glaba/Documents/dev/opencv -BC:/Users/glaba/Documents/dev/opencv/build9 --check-stamp-file C:/Users/glaba/Documents/dev/opencv/build9/3rdparty/libwebp/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Users/glaba/Documents/dev/opencv/3rdparty/libwebp/CMakeLists.txt;C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\CMakeLists.txt;C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\glaba\Documents\dev\opencv\build9\3rdparty\libwebp\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dec\alpha_dec.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dec\buffer_dec.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dec\frame_dec.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dec\idec_dec.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dec\io_dec.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dec\quant_dec.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dec\tree_dec.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dec\vp8_dec.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dec\vp8l_dec.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dec\webp_dec.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\demux\anim_decode.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\demux\demux.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\alpha_processing.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\alpha_processing_mips_dsp_r2.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\alpha_processing_neon.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\alpha_processing_sse2.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\alpha_processing_sse41.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\argb.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\argb_mips_dsp_r2.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\argb_sse2.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\cost.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\cost_mips32.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\cost_mips_dsp_r2.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\cost_sse2.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\cpu.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\dec.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\dec_clip_tables.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\dec_mips32.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\dec_mips_dsp_r2.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\dec_msa.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\dec_neon.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\dec_sse2.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\dec_sse41.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\enc.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\enc_avx2.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\enc_mips32.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\enc_mips_dsp_r2.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\enc_msa.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\enc_neon.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\enc_sse2.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\enc_sse41.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\filters.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\filters_mips_dsp_r2.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\filters_msa.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\filters_neon.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\filters_sse2.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\lossless.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\lossless_enc.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\lossless_enc_mips32.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\lossless_enc_mips_dsp_r2.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\lossless_enc_msa.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\lossless_enc_neon.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\lossless_enc_sse2.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\lossless_enc_sse41.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\lossless_mips_dsp_r2.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\lossless_msa.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\lossless_neon.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\lossless_sse2.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\rescaler.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\rescaler_mips32.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\rescaler_mips_dsp_r2.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\rescaler_msa.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\rescaler_neon.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\rescaler_sse2.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\upsampling.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\upsampling_mips_dsp_r2.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\upsampling_msa.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\upsampling_neon.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\upsampling_sse2.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\yuv.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\yuv_mips32.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\yuv_mips_dsp_r2.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\yuv_sse2.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\enc\alpha_enc.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\enc\analysis_enc.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\enc\backward_references_enc.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\enc\config_enc.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\enc\cost_enc.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\enc\delta_palettization_enc.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\enc\filter_enc.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\enc\frame_enc.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\enc\histogram_enc.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\enc\iterator_enc.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\enc\near_lossless_enc.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\enc\picture_csp_enc.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\enc\picture_enc.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\enc\picture_psnr_enc.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\enc\picture_rescale_enc.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\enc\picture_tools_enc.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\enc\predictor_enc.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\enc\quant_enc.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\enc\syntax_enc.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\enc\token_enc.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\enc\tree_enc.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\enc\vp8l_enc.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\enc\webp_enc.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\mux\anim_encode.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\mux\muxedit.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\mux\muxinternal.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\mux\muxread.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\utils\bit_reader_utils.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\utils\bit_writer_utils.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\utils\color_cache_utils.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\utils\filters_utils.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\utils\huffman_encode_utils.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\utils\huffman_utils.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\utils\quant_levels_dec_utils.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\utils\quant_levels_utils.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\utils\random_utils.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\utils\rescaler_utils.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\utils\thread_utils.c" />
+    <ClCompile Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\utils\utils.c" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dec\alphai_dec.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dec\common_dec.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dec\vp8_dec.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dec\vp8i_dec.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dec\vp8li_dec.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dec\webpi_dec.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\common_sse2.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\dsp.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\lossless.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\lossless_common.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\mips_macro.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\msa_macro.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\neon.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\dsp\yuv.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\enc\backward_references_enc.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\enc\cost_enc.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\enc\delta_palettization_enc.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\enc\histogram_enc.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\enc\vp8i_enc.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\enc\vp8li_enc.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\mux\animi.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\mux\muxi.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\utils\bit_reader_inl_utils.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\utils\bit_reader_utils.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\utils\bit_writer_utils.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\utils\color_cache_utils.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\utils\endian_inl_utils.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\utils\filters_utils.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\utils\huffman_encode_utils.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\utils\huffman_utils.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\utils\quant_levels_dec_utils.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\utils\quant_levels_utils.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\utils\random_utils.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\utils\rescaler_utils.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\utils\thread_utils.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\utils\utils.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\webp\decode.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\webp\demux.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\webp\encode.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\webp\format_constants.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\webp\mux.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\webp\mux_types.h" />
+    <ClInclude Include="C:\Users\glaba\Documents\dev\opencv\3rdparty\libwebp\webp\types.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\glaba\Documents\dev\opencv\build9\ZERO_CHECK.vcxproj">
+      <Project>{E072D9D6-EF7E-3389-ADB3-E32E921FCC33}</Project>
+      <Name>ZERO_CHECK</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
