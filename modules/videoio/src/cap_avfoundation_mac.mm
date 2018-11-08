@@ -181,7 +181,8 @@ class CvVideoWriter_AVFoundation : public CvVideoWriter {
                 double fps, CvSize frame_size,
                 int is_color=1);
         ~CvVideoWriter_AVFoundation();
-        bool writeFrame(const IplImage* image);
+        bool writeFrame(const IplImage* image) CV_OVERRIDE;
+        int getCaptureDomain() const CV_OVERRIDE { return cv::CAP_AVFOUNDATION; }
     private:
         IplImage* argbimage;
 
@@ -853,7 +854,7 @@ IplImage* CvCaptureFile::retrieveFramePixelBuffer() {
         return 0;
     }
 
-     // Output image paramaters.
+     // Output image parameters.
      int outChannels;
      if (mMode == CV_CAP_MODE_BGR || mMode == CV_CAP_MODE_RGB) {
          outChannels = 3;
@@ -887,7 +888,7 @@ IplImage* CvCaptureFile::retrieveFramePixelBuffer() {
     mOutImage->imageData = reinterpret_cast<char *>(mOutImagedata);
     mOutImage->imageSize = int(currSize);
 
-    // Device image paramaters and conversion code.
+    // Device image parameters and conversion code.
     // (Not all of these conversions are used in production, but they were all tested to find the fastest options.)
     int deviceChannels;
     int cvtCode;

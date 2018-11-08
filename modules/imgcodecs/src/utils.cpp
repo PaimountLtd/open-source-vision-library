@@ -652,7 +652,7 @@ cvConvertImage( const CvArr* srcarr, CvArr* dstarr, int flags )
         uchar *s = src->data.ptr, *d = dst->data.ptr;
         int s_step = src->step, d_step = dst->step;
         int code = src_cn*10 + dst_cn;
-        CvSize size(src->cols, src->rows);
+        CvSize size = {src->cols, src->rows};
 
         if( CV_IS_MAT_CONT(src->type & dst->type) )
         {
@@ -670,7 +670,7 @@ cvConvertImage( const CvArr* srcarr, CvArr* dstarr, int flags )
             icvCvt_BGR2Gray_8u_C3C1R( s, s_step, d, d_step, size, swap_rb );
             break;
         case 33:
-            assert( swap_rb );
+            CV_Assert(swap_rb);
             icvCvt_RGB2BGR_8u_C3R( s, s_step, d, d_step, size );
             break;
         case 41:

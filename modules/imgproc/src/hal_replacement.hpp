@@ -271,7 +271,7 @@ inline int hal_ni_resize(int src_type, const uchar *src_data, size_t src_step, i
  */
 inline int hal_ni_warpAffine(int src_type, const uchar *src_data, size_t src_step, int src_width, int src_height, uchar *dst_data, size_t dst_step, int dst_width, int dst_height, const double M[6], int interpolation, int borderType, const double borderValue[4]) { return CV_HAL_ERROR_NOT_IMPLEMENTED; }
 /**
-   @brief hal_warpPerspectve
+   @brief hal_warpPerspective
    @param src_type source and destination image type
    @param src_data source image data
    @param src_step source image step
@@ -287,12 +287,12 @@ inline int hal_ni_warpAffine(int src_type, const uchar *src_data, size_t src_ste
    @param borderValue values to use for CV_HAL_BORDER_CONSTANT mode
    @sa cv::warpPerspective, cv::hal::warpPerspective
  */
-inline int hal_ni_warpPerspectve(int src_type, const uchar *src_data, size_t src_step, int src_width, int src_height, uchar *dst_data, size_t dst_step, int dst_width, int dst_height, const double M[9], int interpolation, int borderType, const double borderValue[4]) { return CV_HAL_ERROR_NOT_IMPLEMENTED; }
+inline int hal_ni_warpPerspective(int src_type, const uchar *src_data, size_t src_step, int src_width, int src_height, uchar *dst_data, size_t dst_step, int dst_width, int dst_height, const double M[9], int interpolation, int borderType, const double borderValue[4]) { return CV_HAL_ERROR_NOT_IMPLEMENTED; }
 
 //! @cond IGNORED
 #define cv_hal_resize hal_ni_resize
 #define cv_hal_warpAffine hal_ni_warpAffine
-#define cv_hal_warpPerspective hal_ni_warpPerspectve
+#define cv_hal_warpPerspective hal_ni_warpPerspective
 //! @endcond
 
 /**
@@ -754,6 +754,22 @@ inline int hal_ni_pyrdown(const uchar* src_data, size_t src_step, int src_width,
 
 //! @cond IGNORED
 #define cv_hal_pyrdown hal_ni_pyrdown
+//! @endcond
+
+/**
+   @brief Canny edge detector
+   @param src_data,src_step Source image
+   @param dst_data,dst_step Destination image
+   @param width,height Source image dimensions
+   @param cn Number of channels
+   @param lowThreshold, highThreshold Thresholds value
+   @param ksize Kernel size for Sobel operator.
+   @param L2gradient Flag, indicating use L2 or L1 norma.
+*/
+inline int hal_ni_canny(const uchar* src_data, size_t src_step, uchar* dst_data, size_t dst_step, int width, int height, int cn, double lowThreshold, double highThreshold, int ksize, bool L2gradient) { return CV_HAL_ERROR_NOT_IMPLEMENTED; }
+
+//! @cond IGNORED
+#define cv_hal_canny hal_ni_canny
 //! @endcond
 
 //! @}

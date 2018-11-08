@@ -42,8 +42,7 @@
 #include "test_precomp.hpp"
 #include "opencv2/video/tracking_c.h"
 
-using namespace cv;
-using namespace std;
+namespace opencv_test { namespace {
 
 class CV_TrackBaseTest : public cvtest::BaseTest
 {
@@ -53,7 +52,7 @@ public:
     void clear();
 
 protected:
-    int read_params( CvFileStorage* fs );
+    int read_params( const cv::FileStorage& fs );
     void run_func(void);
     int prepare_test_case( int test_case_idx );
     int validate_test_results( int test_case_idx );
@@ -90,15 +89,15 @@ void CV_TrackBaseTest::clear()
 }
 
 
-int CV_TrackBaseTest::read_params( CvFileStorage* fs )
+int CV_TrackBaseTest::read_params( const cv::FileStorage& fs )
 {
     int code = cvtest::BaseTest::read_params( fs );
     if( code < 0 )
         return code;
 
-    test_case_count = cvReadInt( find_param( fs, "test_case_count" ), test_case_count );
-    min_log_size = cvReadInt( find_param( fs, "min_log_size" ), min_log_size );
-    max_log_size = cvReadInt( find_param( fs, "max_log_size" ), max_log_size );
+    read( find_param( fs, "test_case_count" ), test_case_count, test_case_count );
+    read( find_param( fs, "min_log_size" ), min_log_size, min_log_size );
+    read( find_param( fs, "max_log_size" ), max_log_size, max_log_size );
 
     min_log_size = cvtest::clipInt( min_log_size, 1, 10 );
     max_log_size = cvtest::clipInt( max_log_size, 1, 10 );
@@ -436,7 +435,7 @@ void CV_MeanShiftTest::run_func(void)
 int CV_MeanShiftTest::validate_test_results( int /*test_case_idx*/ )
 {
     int code = cvtest::TS::OK;
-    CvPoint2D32f c;
+    Point2f c;
     double m = MAX(box0.size.width, box0.size.height), delta;
 
     if( cvIsNaN(comp.area) || cvIsInf(comp.area) || comp.area <= 0 )
@@ -509,4 +508,5 @@ _exit_:
 TEST(Video_CAMShift, accuracy) { CV_CamShiftTest test; test.safe_run(); }
 TEST(Video_MeanShift, accuracy) { CV_MeanShiftTest test; test.safe_run(); }
 
+}} // namespace
 /* End of file. */

@@ -47,15 +47,12 @@
 #include <iostream>
 #include <fstream>
 
-#if defined(ENABLE_TORCH_IMPORTER) && ENABLE_TORCH_IMPORTER
 #include "THDiskFile.h"
-#endif
 
 namespace cv {
 namespace dnn {
-CV__DNN_EXPERIMENTAL_NS_BEGIN
+CV__DNN_INLINE_NS_BEGIN
 
-#if defined(ENABLE_TORCH_IMPORTER) && ENABLE_TORCH_IMPORTER
 using namespace TH;
 
 //#ifdef NDEBUG
@@ -77,6 +74,18 @@ enum LuaType
     LEGACY_TYPE_RECUR_FUNCTION = 7
 };
 
+// We use OpenCV's types to manage CV_ELEM_SIZE.
+enum TorchType
+{
+    TYPE_DOUBLE = CV_64F,
+    TYPE_FLOAT  = CV_32F,
+    TYPE_BYTE   = CV_8U,
+    TYPE_CHAR   = CV_8S,
+    TYPE_SHORT  = CV_16S,
+    TYPE_INT    = CV_32S,
+    TYPE_LONG   = CV_32SC2
+};
+
 template<typename T>
 static String toString(const T &v)
 {
@@ -95,7 +104,7 @@ static inline bool endsWith(const String &str, const char *substr)
     return str.rfind(substr) == str.length() - strlen(substr);
 }
 
-struct TorchImporter : public ::cv::dnn::Importer
+struct TorchImporter
 {
     typedef std::map<String, std::pair<int, Mat> > TensorsMap;
     Net net;
@@ -104,6 +113,8 @@ struct TorchImporter : public ::cv::dnn::Importer
     std::set<int> readedIndexes;
     std::map<int, Mat> storages;
     std::map<int, Mat> tensors;
+    // Stack with numbers of unconnected layers per scope (Sequential, ConcatTable etc.)
+    std::vector<int> numUnconnectedLayers;
 
     struct Module
     {
@@ -204,19 +215,19 @@ struct TorchImporter : public ::cv::dnn::Importer
            String typeStr = str.substr(strlen(prefix), str.length() - strlen(prefix) - strlen(suffix));
 
            if (typeStr == "Double")
-               return CV_64F;
+               return TYPE_DOUBLE;
            else if (typeStr == "Float" || typeStr == "Cuda")
-               return CV_32F;
+               return TYPE_FLOAT;
            else if (typeStr == "Byte")
-               return CV_8U;
+               return TYPE_BYTE;
            else if (typeStr == "Char")
-               return CV_8S;
+               return TYPE_CHAR;
            else if (typeStr == "Short")
-               return CV_16S;
+               return TYPE_SHORT;
            else if (typeStr == "Int")
-               return CV_32S;
-           else if (typeStr == "Long") //Carefully! CV_64S type coded as CV_USRTYPE1
-               return CV_USRTYPE1;
+               return TYPE_INT;
+           else if (typeStr == "Long")
+               return TYPE_LONG;
            else
                CV_Error(Error::StsNotImplemented, "Unknown type \"" + typeStr + "\" of torch class \"" + str + "\"");
         }
@@ -237,36 +248,44 @@ struct TorchImporter : public ::cv::dnn::Importer
     void readTorchStorage(int index, int type = -1)
     {
         long size = readLong();
-        Mat storageMat(1, size, (type != CV_USRTYPE1) ? type : CV_64F); //handle LongStorage as CV_64F Mat
+        Mat storageMat;
 
         switch (type)
         {
-        case CV_32F:
+        case TYPE_FLOAT:
+            storageMat.create(1, size, CV_32F);
             THFile_readFloatRaw(file, (float*)storageMat.data, size);
             break;
-        case CV_64F:
+        case TYPE_DOUBLE:
+            storageMat.create(1, size, CV_64F);
             THFile_readDoubleRaw(file, (double*)storageMat.data, size);
             break;
-        case CV_8S:
-        case CV_8U:
+        case TYPE_CHAR:
+            storageMat.create(1, size, CV_8S);
             THFile_readByteRaw(file, (uchar*)storageMat.data, size);
             break;
-        case CV_16S:
-        case CV_16U:
+        case TYPE_BYTE:
+            storageMat.create(1, size, CV_8U);
+            THFile_readByteRaw(file, (uchar*)storageMat.data, size);
+            break;
+        case TYPE_SHORT:
+            storageMat.create(1, size, CV_16S);
             THFile_readShortRaw(file, (short*)storageMat.data, size);
             break;
-        case CV_32S:
+        case TYPE_INT:
+            storageMat.create(1, size, CV_32S);
             THFile_readIntRaw(file, (int*)storageMat.data, size);
             break;
-        case CV_USRTYPE1:
+        case TYPE_LONG:
         {
+            storageMat.create(1, size, CV_64F);   //handle LongStorage as CV_64F Mat
             double *buf = storageMat.ptr<double>();
             THFile_readLongRaw(file, (int64*)buf, size);
 
             for (size_t i = (size_t)size; i-- > 0; )
                 buf[i] = ((int64*)buf)[i];
-        }
             break;
+        }
         default:
             CV_Error(Error::StsInternal, "");
             break;
@@ -312,11 +331,11 @@ struct TorchImporter : public ::cv::dnn::Importer
                 int numModules = curModule->modules.size();
                 readTorchObject(index);
 
-                if (tensors.count(index)) //tensor was readed
+                if (tensors.count(index)) //tensor was read
                 {
                     tensorParams.insert(std::make_pair(key, std::make_pair(index, tensors[index])));
                 }
-                else if (storages.count(index)) //storage was readed
+                else if (storages.count(index)) //storage was read
                 {
                     Mat &matStorage = storages[index];
                     Mat matCasted;
@@ -371,8 +390,8 @@ struct TorchImporter : public ::cv::dnn::Importer
         int ndims = readInt();
         AutoBuffer<int64, 4> sizes(ndims);
         AutoBuffer<int64, 4> steps(ndims);
-        THFile_readLongRaw(file, sizes, ndims);
-        THFile_readLongRaw(file, steps, ndims);
+        THFile_readLongRaw(file, sizes.data(), ndims);
+        THFile_readLongRaw(file, steps.data(), ndims);
         long offset = readLong() - 1;
 
         //read Storage
@@ -400,7 +419,7 @@ struct TorchImporter : public ::cv::dnn::Importer
         size_t requireElems = (size_t)offset + (size_t)steps[0] * (size_t)sizes[0];
         size_t storageElems = storages[indexStorage].total();
         if (requireElems > storageElems)
-            CV_Error(Error::StsBadSize, "Storage has insufficent number of elemements for requested Tensor");
+            CV_Error(Error::StsBadSize, "Storage has insufficient number of elements for requested Tensor");
 
         //convert sizes
         AutoBuffer<int, 4> isizes(ndims);
@@ -412,7 +431,7 @@ struct TorchImporter : public ::cv::dnn::Importer
         }
 
         //allocate Blob
-        Mat srcMat(ndims, (int*)isizes, typeTensor , storages[indexStorage].ptr() + offset*CV_ELEM_SIZE(typeTensor), (size_t*)ssteps);
+        Mat srcMat(ndims, isizes.data(), typeTensor , storages[indexStorage].ptr() + offset*CV_ELEM_SIZE(typeTensor), ssteps.data());
         int dstType = CV_32F;
 
         Mat blob;
@@ -492,15 +511,7 @@ struct TorchImporter : public ::cv::dnn::Importer
                     layerParams.set("inputDimension", scalarParams.get<int>("inputDimension"));
                     layerParams.set("outputDimension", scalarParams.get<int>("outputDimension"));
                 }
-                if (nnName == "Concat")
-                {
-                    layerParams.set("dimension", scalarParams.get<int>("dimension"));
-                }
-                if (nnName == "JoinTable")
-                {
-                    layerParams.set("dimension", scalarParams.get<int>("dimension"));
-                }
-                if (nnName == "DepthConcat")
+                else if (nnName == "Concat" || nnName == "JoinTable" || nnName == "DepthConcat")
                 {
                     layerParams.set("dimension", scalarParams.get<int>("dimension"));
                 }
@@ -562,7 +573,11 @@ struct TorchImporter : public ::cv::dnn::Importer
                     layerParams.set("indices_blob_id", tensorParams["indices"].first);
                 }
                 if (nnName == "SpatialAveragePooling")
+                {
                     layerParams.set("pool", "AVE");
+                    layerParams.set("ave_pool_padded_area", scalarParams.has("count_include_pad") &&
+                                                            scalarParams.get<bool>("count_include_pad"));
+                }
                 convertTorchKernelsParams(scalarParams, layerParams);
 
                 CV_Assert(scalarParams.has("ceil_mode"));
@@ -597,8 +612,8 @@ struct TorchImporter : public ::cv::dnn::Importer
                 DictValue dimParam = scalarParams.get("size");
                 layerParams.set("dim", dimParam);
 
-                if (scalarParams.has("batchMode") && scalarParams.get<bool>("batchMode"))
-                    layerParams.set("axis", 1);
+                int axis = (int)scalarParams.get<bool>("batchMode", true);
+                layerParams.set("axis", axis);
 
                 curModule->modules.push_back(newModule);
             }
@@ -901,8 +916,8 @@ struct TorchImporter : public ::cv::dnn::Importer
             else if (nnName == "SpatialZeroPadding" || nnName == "SpatialReflectionPadding")
             {
                 readTorchTable(scalarParams, tensorParams);
-                CV_Assert(scalarParams.has("pad_l"), scalarParams.has("pad_r"),
-                          scalarParams.has("pad_t"), scalarParams.has("pad_b"));
+                CV_Assert_N(scalarParams.has("pad_l"), scalarParams.has("pad_r"),
+                            scalarParams.has("pad_t"), scalarParams.has("pad_b"));
                 int padTop = scalarParams.get<int>("pad_t");
                 int padLeft = scalarParams.get<int>("pad_l");
                 int padRight = scalarParams.get<int>("pad_r");
@@ -943,9 +958,33 @@ struct TorchImporter : public ::cv::dnn::Importer
                 layerParams.set("end", DictValue::arrayInt<int*>(&ends[0], 4));
                 curModule->modules.push_back(newModule);
             }
+            else if (nnName == "SpatialUpSamplingNearest")
+            {
+                readTorchTable(scalarParams, tensorParams);
+                CV_Assert(scalarParams.has("scale_factor"));
+                int scale_factor = scalarParams.get<int>("scale_factor");
+                newModule->apiType = "Resize";
+                layerParams.set("interpolation", "nearest");
+                layerParams.set("zoom_factor", scale_factor);
+                curModule->modules.push_back(newModule);
+            }
             else
             {
-                CV_Error(Error::StsNotImplemented, "Unknown nn class \"" + className + "\"");
+                // Importer does not know how to map Torch's layer type to an OpenCV's one.
+                // However we parse all the parameters to let user create a custom layer.
+                readTorchTable(scalarParams, tensorParams);
+                for (std::map<String, DictValue>::const_iterator it = scalarParams.begin();
+                     it != scalarParams.end(); ++it)
+                {
+                    layerParams.set(it->first, it->second);
+                }
+                for (std::map<String, std::pair<int, Mat> >::iterator it = tensorParams.begin();
+                     it != tensorParams.end(); ++it)
+                {
+                    layerParams.blobs.push_back(it->second.second);
+                }
+                newModule->apiType = nnName;
+                curModule->modules.push_back(newModule);
             }
         }
         else
@@ -1095,6 +1134,7 @@ struct TorchImporter : public ::cv::dnn::Importer
                 {
                     newId = fill(module->modules[i], addedModules, prevLayerId, prevOutNum);
                 }
+                numUnconnectedLayers.push_back(module->modules.size());
                 return newId;
             }
             else if (module->thName == "JoinTable") {
@@ -1107,9 +1147,14 @@ struct TorchImporter : public ::cv::dnn::Importer
                 mergeId = net.addLayer(generateLayerName("torchMerge"), "Concat", mergeParams);
                 addedModules.push_back(std::make_pair(mergeId, module));
 
-                for (int i = 0; i < ids.size(); i++)
+                // Connect to the last number of unconnected layers.
+                CV_Assert(!numUnconnectedLayers.empty());
+                const int numInputs = numUnconnectedLayers.back();
+                numUnconnectedLayers.pop_back();
+                CV_Assert(numInputs <= ids.size());
+                for (int i = 0; i < numInputs; i++)
                 {
-                    net.connect(ids[i], 0, mergeId, i);
+                    net.connect(ids[ids.size() - numInputs + i], 0, mergeId, i);
                 }
 
                 return mergeId;
@@ -1123,9 +1168,14 @@ struct TorchImporter : public ::cv::dnn::Importer
 
                 int id = net.addLayer(name, "Eltwise", params);
 
-                for (int i = 0; i < ids.size(); i++)
+                // Connect to the last number of unconnected layers.
+                CV_Assert(!numUnconnectedLayers.empty());
+                const int numInputs = numUnconnectedLayers.back();
+                numUnconnectedLayers.pop_back();
+                CV_Assert(numInputs <= ids.size());
+                for (int i = 0; i < numInputs; i++)
                 {
-                    net.connect(ids[i], 0, id, i);
+                    net.connect(ids[ids.size() - numInputs + i], 0, id, i);
                 }
 
                 addedModules.push_back(std::make_pair(id, module));
@@ -1191,19 +1241,13 @@ struct TorchImporter : public ::cv::dnn::Importer
     }
 };
 
-Ptr<Importer> createTorchImporter(const String &filename, bool isBinary)
-{
-    return Ptr<Importer>(new TorchImporter(filename, isBinary));
-}
-
-
 Mat readTorchBlob(const String &filename, bool isBinary)
 {
-    Ptr<TorchImporter> importer(new TorchImporter(filename, isBinary));
-    importer->readObject();
-    CV_Assert(importer->tensors.size() == 1);
+    TorchImporter importer(filename, isBinary);
+    importer.readObject();
+    CV_Assert(importer.tensors.size() == 1);
 
-    return importer->tensors.begin()->second;
+    return importer.tensors.begin()->second;
 }
 
 Net readNetFromTorch(const String &model, bool isBinary)
@@ -1216,27 +1260,5 @@ Net readNetFromTorch(const String &model, bool isBinary)
     return net;
 }
 
-#else
-
-Ptr<Importer> createTorchImporter(const String&, bool)
-{
-    CV_Error(Error::StsNotImplemented, "Torch importer is disabled in current build");
-    return Ptr<Importer>();
-}
-
-Mat readTorchBlob(const String&, bool)
-{
-    CV_Error(Error::StsNotImplemented, "Torch importer is disabled in current build");
-    return Mat();
-}
-
-Net readNetFromTorch(const String &model, bool isBinary)
-{
-    CV_Error(Error::StsNotImplemented, "Torch importer is disabled in current build");
-    return Net();
-}
-
-#endif //defined(ENABLE_TORCH_IMPORTER) && ENABLE_TORCH_IMPORTER
-
-CV__DNN_EXPERIMENTAL_NS_END
+CV__DNN_INLINE_NS_END
 }} // namespace

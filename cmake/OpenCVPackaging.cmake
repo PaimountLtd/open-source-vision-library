@@ -1,4 +1,9 @@
-if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
+ocv_cmake_hook(INIT_CPACK)
+if(NOT EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
+  message(STATUS "CPack is not found. SKIP")
+  return()
+endif()
+
 set(CPACK_set_DESTDIR "on")
 
 if(NOT OPENCV_CUSTOM_PACKAGE_INFO)
@@ -84,7 +89,7 @@ set(CPACK_COMPONENT_TESTS_DEPENDS libs)
 
 if(HAVE_CUDA)
   string(REPLACE "." "-" cuda_version_suffix ${CUDA_VERSION})
-  if(${CUDA_VERSION} VERSION_LESS "6.5")
+  if(CUDA_VERSION VERSION_LESS "6.5")
     set(CPACK_DEB_libs_PACKAGE_DEPENDS "cuda-core-libs-${cuda_version_suffix}, cuda-extra-libs-${cuda_version_suffix}")
     set(CPACK_DEB_dev_PACKAGE_DEPENDS "cuda-headers-${cuda_version_suffix}")
   else()
@@ -165,6 +170,6 @@ if(NOT OPENCV_CUSTOM_PACKAGE_INFO)
   set(CPACK_DEBIAN_COMPONENT_TESTS_NAME "lib${CMAKE_PROJECT_NAME}-tests")
 endif(NOT OPENCV_CUSTOM_PACKAGE_INFO)
 
+ocv_cmake_hook(PRE_CPACK)
 include(CPack)
-
-ENDif(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
+ocv_cmake_hook(POST_CPACK)
